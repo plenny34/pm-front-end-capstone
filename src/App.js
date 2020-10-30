@@ -7,6 +7,7 @@ import { Route, Link, Switch } from "react-router-dom";
 
 import PolicyList from "./components/policies-list.component";
 import AddPolicy from "./components/policy-add.component";
+import PolicyComponent from "./components/policy.component"
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Switch>
           <Route exact path={ ['/', '/policies'] } component={PolicyList} />
           <Route exact path={ '/addPolicy' } component={AddPolicy} />
+          <Route path={'/policies/:id'} children={<PolicyComponent />} />
         </Switch>
       </div>
     </div>

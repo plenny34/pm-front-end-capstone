@@ -1,28 +1,30 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const retrievePolicies = async (setPolicies) => {
-  const res = await axios.get('http://localhost:4000/api/policies/')
-  const newPolicies = [];
-  res.data.forEach(policy => {
-    newPolicies.push(policy);
-  })
-  setPolicies(newPolicies);
-}
 
 const PolicyList = (props) => {
   const [policies, setPolicies] = useState([]);
   const [currentPolicy, setCurrentPolicy] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
+  const history = useHistory();
+
+  useEffect(async () => {
+    const res = await axios.get('http://localhost:4000/api/policies/')
+    const newPolicies = [];
+    res.data.forEach(policy => {
+      newPolicies.push(policy);
+    })
+    setPolicies(newPolicies);
+  }, []);
+
+  const rowClick = (id) => {
+    history.push(`/policies/${id}`);
+  };
 
   return (
     <div>
-      <button
-        onClick={() => retrievePolicies(setPolicies)}
-        className="btn btn-secondary btn-lg btn-block"
-      >
-        Retrieve Policies
-      </button>
       <table className="table table-hover">
         <thead className="thead-light">
           <tr key="header">
@@ -38,7 +40,7 @@ const PolicyList = (props) => {
         <tbody>
         {policies.map(policy => {
           return (
-            <tr key={policy._id}>
+            <tr key={policy._id} onClick={() => rowClick(policy._id)}>
               <td>{policy.name}</td>
               <td>{policy.type}</td>
               <td>{policy.holder_first_name}</td>
