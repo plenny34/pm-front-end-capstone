@@ -7,12 +7,12 @@ import { Route, Link, Switch } from "react-router-dom";
 
 import PolicyList from "./components/policies-list.component";
 import AddPolicy from "./components/policy-add.component";
-import PolicyComponent from "./components/policy.component"
+import PolicyDetail from "./components/policy-detail.component"
 
 const App = () => {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
         <div className="collpase navbar-collapse">
           <ul className="navbar-nav mr-auto">
             <li className="navbar-item">
@@ -28,7 +28,7 @@ const App = () => {
         <Switch>
           <Route exact path={ ['/', '/policies'] } component={PolicyList} />
           <Route exact path={ '/addPolicy' } component={AddPolicy} />
-          <Route path={'/policies/:id'} children={<PolicyComponent />} />
+          <Route path={'/policies/:id'} children={<PolicyDetail />} />
         </Switch>
       </div>
     </div>
